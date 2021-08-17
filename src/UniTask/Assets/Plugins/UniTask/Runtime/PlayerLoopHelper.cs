@@ -297,15 +297,8 @@ namespace Cysharp.Threading.Tasks
             }
             catch { }
 
-#if UNITY_EDITOR && UNITY_2019_3_OR_NEWER
-            // When domain reload is disabled, re-initialization is required when entering play mode; 
-            // otherwise, pending tasks will leak between play mode sessions.
-            var domainReloadDisabled = UnityEditor.EditorSettings.enterPlayModeOptionsEnabled &&
-                UnityEditor.EditorSettings.enterPlayModeOptions.HasFlag(UnityEditor.EnterPlayModeOptions.DisableDomainReload);
-            if (!domainReloadDisabled && runners != null) return;
-#else
+
             if (runners != null) return; // already initialized
-#endif
 
             var playerLoop =
 #if UNITY_2019_3_OR_NEWER
